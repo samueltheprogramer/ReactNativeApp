@@ -1,117 +1,97 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, {useRef} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import Swiper from 'react-native-swiper';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const App = () => {
+  const swiperRef = useRef(null);
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <View style={styles.sectionContainer}>
+    <View style={{flex: 1, backgroundColor: 'white', justifyContent: 'center'}}>
       <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
+        style={{
+          color: 'red',
+          fontWeight: '600',
+          fontSize: 25,
+          textAlign: 'center',
+        }}>
+        react-native-swiper
       </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+      <View style={{width: '100%', height: 500}}>
+        <Swiper
+          ref={swiperRef}
+          showsHorizontalScrollIndicator={true}
+          showsButtons={true}
+          nextButton={<Text style={styles.buttonText}>›</Text>}
+          prevButton={<Text style={styles.buttonText}>‹</Text>}
+          containerStyle={{margin: 5}}
+          activeDotColor="red"
+          activeDotStyle={{width: 20, height: 20, borderRadius: 50}}
+          autoplay={true}
+          style={styles.wrapper}
+          bounces={true}
+          showsPagination={true}
+          loop={true}>
+          <View style={[styles.slide, {backgroundColor: 'yellow'}]}>
+            <Text style={styles.text}>Slide 1</Text>
+          </View>
+          <View style={[styles.slide, {backgroundColor: 'blue'}]}>
+            <Text style={styles.text}>Slide 2</Text>
+          </View>
+          <View style={styles.slide}>
+            <Text style={styles.text}>Slide 3</Text>
+          </View>
+          <View style={[styles.slide, {backgroundColor: 'green'}]}>
+            <Text style={styles.text}>Slide 4</Text>
+          </View>
+        </Swiper>
+      </View>
+
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <TouchableOpacity onPress={() => swiperRef.current.scrollBy(-1)}>
+          <Text style={styles.customButton}>Prev</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => swiperRef.current.scrollBy(1)}>
+          <Text style={styles.customButton}>Next</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  wrapper: {},
+
+  buttonText: {
+    color: 'red',
+    fontSize: 60,
+    fontWeight: 'bold',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  customButton: {
+    color: 'gray',
+    fontSize: 60,
+    fontWeight: 'bold',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  slide: {
+    margin: 30,
+    borderRadius: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB',
   },
-  highlight: {
-    fontWeight: '700',
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  indexContainer: {
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+  indexText: {
+    color: 'red',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 
